@@ -4,3 +4,11 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media (max-width: 700px) {
+  .profile {
+    padding: 42px 19px 36px;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}

@@ -3,3 +3,10 @@
   align-items: baseline;
   padding-bottom: 6px;
 }
+
+@media (max-width: 700px) {
+  .profile__title-wrapper {
+    position: relative;
+    padding-bottom: 7px;
+  }
+}

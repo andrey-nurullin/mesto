@@ -2,5 +2,14 @@
   margin-right: auto;
   box-sizing: border-box;
   padding: 0 30px;
-  max-width: calc(100% - 120px - 150px);
+  max-width: calc(100% - 270px);
+}
+
+@media (max-width: 700px) {
+  .profile__info {
+    margin: 0;
+    padding: 26px 0 33px;
+    max-width: 100%;
+    text-align: center;
+  }
 }
