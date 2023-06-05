@@ -4,7 +4,6 @@
   min-width: 320px;
   margin: 0 auto;
   padding: 45px 0 60px;
-  outline: 1px solid red;
 }
 
 @media (max-width: 1000px) {
