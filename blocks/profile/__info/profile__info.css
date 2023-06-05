@@ -1,0 +1,6 @@
+.profile__info {
+  margin-right: auto;
+  box-sizing: border-box;
+  padding: 0 30px;
+  max-width: calc(100% - 120px - 150px);
+}

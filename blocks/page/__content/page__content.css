@@ -4,11 +4,14 @@
   min-width: 320px;
   margin: 0 auto;
   padding: 45px 0 60px;
+  outline: 1px solid red;
 }
 
 @media (max-width: 1000px) {
   .page__content {
-    margin: 0 60px;
+    max-width: 100%;
+    margin: 0;
+    padding: 45px 60px 60px;
   }
 }
 

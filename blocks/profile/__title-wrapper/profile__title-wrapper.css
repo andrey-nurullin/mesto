@@ -1,0 +1,5 @@
+.profile__title-wrapper {
+  display: flex;
+  align-items: baseline;
+  padding-bottom: 6px;
+}
