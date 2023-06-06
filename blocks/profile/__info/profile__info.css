@@ -9,6 +9,7 @@
   .profile__info {
     margin: 0;
     padding: 26px 0 33px;
+    max-height: 116px;
     max-width: 100%;
     text-align: center;
   }
