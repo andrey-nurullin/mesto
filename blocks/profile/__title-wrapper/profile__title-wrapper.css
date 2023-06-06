@@ -7,6 +7,7 @@
 @media (max-width: 700px) {
   .profile__title-wrapper {
     display: inline-block;
+    max-width: 282px;
     position: relative;
     padding-bottom: 7px;
     min-height: 33px;
