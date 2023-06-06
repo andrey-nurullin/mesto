@@ -33,11 +33,3 @@ function handleFormSubmit(e) {
 openPopupButton.addEventListener('click', initPopup);
 closePopupButton.addEventListener('click', handlePopupVisibility);
 profileForm.addEventListener('submit', handleFormSubmit);
-
-// function fillFormData () {
-//   return {
-//     name: document.querySelector('.profile__title').textContent,
-//     about: document.querySelector('.profile__subtitle').textContent
-//   }
-// }
-
