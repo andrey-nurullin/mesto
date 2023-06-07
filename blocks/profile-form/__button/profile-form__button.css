@@ -13,6 +13,7 @@
   background-color: #000;
   color: #fff;
   text-align: center;
+  transition: opacity .4s;
 }
 
 .profile-form__button:hover {
