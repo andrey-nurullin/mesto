@@ -75,7 +75,7 @@ function openAddCardPopup() {
 function addCardElement() {
   let name = addCardForm['name'].value;
   let link = addCardForm['link'].value;
-  initCard(name, link);
+  addCard(name, link);
 }
 
 function clearAddCardForm() {
@@ -97,22 +97,34 @@ function getCardElement(name, link) {
   return cardElement;
 }
 
-function handleLikeAction(likeBtn) {
+function handleCardLike(likeBtn) {
   likeBtn.classList.toggle('cards-grid__like-button_active');
 }
 
-function initCard(name, link) {
+function handleCardDelete(deleteBtn) {
+  const cardNode = deleteBtn.closest('.cards-grid__card');
+  cardNode.remove();
+}
+
+function initCardButtons(card) {
+  const likeBtn = card.querySelector('.cards-grid__like-button');
+  likeBtn.addEventListener('click', () => handleCardLike(likeBtn));
+
+  const deleteBtn = card.querySelector('.cards-grid__delete-button');
+  deleteBtn.addEventListener('click', () => handleCardDelete(deleteBtn));
+}
+
+function addCard(name, link) {
   const cardNode = getCardElement(name, link);
-  const likeBtn = cardNode.querySelector('.cards-grid__like-button');
-  likeBtn.addEventListener('click', () => handleLikeAction(likeBtn));
+  initCardButtons(cardNode);
   document.querySelector('.cards-grid').prepend(cardNode);
 }
 
-function initCards(cardDataArray) {
-  cardDataArray.forEach(cardData => initCard(cardData.name, cardData.link));
+function addCards(cardDataArray) {
+  cardDataArray.forEach(cardData => addCard(cardData.name, cardData.link));
 }
 
-initCards(initialCards);
+addCards(initialCards);
 openProfilePopupBtn.addEventListener('click', openProfilePopup);
 openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
 initPopupClosingBtn(profilePopup);
