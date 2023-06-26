@@ -27,10 +27,10 @@ const initialCards = [
 
 const profilePopup = document.querySelector('#popup-profile');
 const addCardPopup = document.querySelector('#popup-add-card');
-const openProfilePopupBtn = document.querySelector('.profile__edit-button');
-const openAddCardPopupBtn = document.querySelector('.profile__add-card-button');
 const profileForm = getPopupForm(profilePopup);
 const addCardForm = getPopupForm(addCardPopup);
+const openProfilePopupBtn = document.querySelector('.profile__edit-button');
+const openAddCardPopupBtn = document.querySelector('.profile__add-card-button');
 const titleElement = document.querySelector('.profile__title');
 const subtitleElement = document.querySelector('.profile__subtitle');
 
@@ -38,13 +38,13 @@ function getPopupForm(thisPopup) {
   return thisPopup.querySelector('.popup-form');
 }
 
-function renderPopupVisibility(thisPopup) {
-  thisPopup.classList.toggle('popup_opened');
-}
-
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
   closePopupBtn.addEventListener('click', () => renderPopupVisibility(thisPopup));
+}
+
+function renderPopupVisibility(thisPopup) {
+  thisPopup.classList.toggle('popup_opened');
 }
 
 function fillProfileForm() {
@@ -62,13 +62,30 @@ function fillProfileBlock() {
   subtitleElement.textContent = profileForm['job'].value;
 }
 
-function handleFormSubmit(e) {
+function handleProfileFormSubmit(e) {
   e.preventDefault();
   fillProfileBlock();
-  renderProfilePopupVisibility();
+  renderPopupVisibility(profileForm);
 }
 
 function openAddCardPopup() {
+  renderPopupVisibility(addCardPopup);
+}
+
+function addCardElement() {
+  let name = addCardForm['name'].value;
+  let link = addCardForm['link'].value;
+  renderCardElement(name, link);
+}
+
+function clearAddCardForm() {
+  addCardForm.reset();
+}
+
+function handleAddCardFormSubmit(e) {
+  e.preventDefault();
+  addCardElement();
+  clearAddCardForm();
   renderPopupVisibility(addCardPopup);
 }
 
@@ -80,13 +97,13 @@ function getCardElement(name, link) {
   return cardElement;
 }
 
-function addCardElement(name, link) {
+function renderCardElement(name, link) {
   let cardNode = getCardElement(name, link);
   document.querySelector('.cards-grid').prepend(cardNode);
 }
 
 function initCards(cardDataArray) {
-  cardDataArray.forEach(cardData => addCardElement(cardData.name, cardData.link));
+  cardDataArray.forEach(cardData => renderCardElement(cardData.name, cardData.link));
 }
 
 initCards(initialCards);
@@ -94,4 +111,5 @@ openProfilePopupBtn.addEventListener('click', openProfilePopup);
 openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
 initPopupClosingBtn(profilePopup);
 initPopupClosingBtn(addCardPopup);
-profileForm.addEventListener('submit', handleFormSubmit);
+profileForm.addEventListener('submit', handleProfileFormSubmit);
+addCardForm.addEventListener('submit', handleAddCardFormSubmit);
