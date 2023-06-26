@@ -1,4 +1,4 @@
-.photo-grid__like-button {
+.cards-grid__like-button {
   min-width: 22px;
   height: 19px;
   box-sizing: border-box;
@@ -10,7 +10,7 @@
   transition: opacity .4s;
 }
 
-.photo-grid__like-button:hover {
+.cards-grid__like-button:hover {
   opacity: .5;
   cursor: pointer;
 }

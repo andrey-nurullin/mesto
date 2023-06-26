@@ -1,4 +1,4 @@
-.photo-grid {
+.cards-grid {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -8,13 +8,13 @@
 }
 
 @media (max-width: 850px) {
-  .photo-grid {
+  .cards-grid {
     grid-template-columns: repeat(2, minmax(200px, 1fr));
   }
 }
 
 @media (max-width: 550px) {
-  .photo-grid {
+  .cards-grid {
     grid-template-columns: minmax(282px, 1fr);
   }
 }

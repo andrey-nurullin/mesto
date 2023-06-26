@@ -1,4 +1,4 @@
-.photo-grid__item {
+.cards-grid__card {
   display: flex;
   flex-direction: column;
   margin: 0;
