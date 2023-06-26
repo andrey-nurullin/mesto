@@ -1,0 +1,10 @@
+.popup_content_photo {
+  background: rgba(0, 0, 0, .9);
+}
+
+.popup_content_photo .popup__container {
+  max-width: none;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
