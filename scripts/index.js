@@ -75,7 +75,7 @@ function openAddCardPopup() {
 function addCardElement() {
   let name = addCardForm['name'].value;
   let link = addCardForm['link'].value;
-  renderCardElement(name, link);
+  initCard(name, link);
 }
 
 function clearAddCardForm() {
@@ -97,13 +97,19 @@ function getCardElement(name, link) {
   return cardElement;
 }
 
-function renderCardElement(name, link) {
-  let cardNode = getCardElement(name, link);
+function handleLikeAction(likeBtn) {
+  likeBtn.classList.toggle('cards-grid__like-button_active');
+}
+
+function initCard(name, link) {
+  const cardNode = getCardElement(name, link);
+  const likeBtn = cardNode.querySelector('.cards-grid__like-button');
+  likeBtn.addEventListener('click', () => handleLikeAction(likeBtn));
   document.querySelector('.cards-grid').prepend(cardNode);
 }
 
 function initCards(cardDataArray) {
-  cardDataArray.forEach(cardData => renderCardElement(cardData.name, cardData.link));
+  cardDataArray.forEach(cardData => initCard(cardData.name, cardData.link));
 }
 
 initCards(initialCards);

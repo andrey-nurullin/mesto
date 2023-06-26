@@ -7,7 +7,7 @@
   appearance: none;
   border: 0;
   background: no-repeat center url('../../../images/icon-like.svg');
-  transition: opacity .4s;
+  transition: opacity .4s, background .2s ease;
 }
 
 .cards-grid__like-button:hover {
