@@ -1,4 +1,4 @@
-.profile-form__input-text {
+.popup-form__input-text {
   box-sizing: border-box;
   width: 100%;
   border: 0;
@@ -12,6 +12,6 @@
   background-color: transparent;
 }
 
-.profile-form__input-text:focus {
+.popup-form__input-text:focus {
   outline: none;
 }

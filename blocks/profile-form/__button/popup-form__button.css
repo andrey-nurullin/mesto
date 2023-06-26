@@ -1,4 +1,4 @@
-.profile-form__button {
+.popup-form__button {
   box-sizing: border-box;
   width: 100%;
   min-height: 50px;
@@ -16,12 +16,12 @@
   transition: opacity .4s;
 }
 
-.profile-form__button:hover {
+.popup-form__button:hover {
   opacity: .8;
 }
 
 @media (max-width: 550px) {
-  .profile-form__button {
+  .popup-form__button {
     font-size: 14px;
     line-height: 17px;
     margin: 21px 0 0;
