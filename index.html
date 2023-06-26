@@ -26,13 +26,6 @@
       </section>
       <section class="gallery" aria-label="Фотогалерея разных мест пользователя">
         <ul class="cards-grid">
-          <li class="cards-grid__card">
-            <img class="cards-grid__card-photo" src="images/photo-castle.jpg" alt="Замок на холме">
-            <div class="cards-grid__caption-wrapper">
-              <h2 class="cards-grid__card-caption text-overflow-protect">Замок Влиет</h2>
-              <button class="cards-grid__like-button" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -51,6 +44,15 @@
       </form>
     </div>
   </aside>
+  <template id="card">
+    <li class="cards-grid__card">
+      <img class="cards-grid__card-photo" src="" alt="Фото места">
+      <div class="cards-grid__caption-wrapper">
+        <h2 class="cards-grid__card-caption text-overflow-protect"></h2>
+        <button class="cards-grid__like-button" type="button"></button>
+      </div>
+    </li>
+  </template>
   <script src="scripts/index.js"></script>
 </body>
 </html>
