@@ -103,8 +103,11 @@ function handleCardDelete(deleteBtn) {
 
 function handleOpenPhotoPopup(name, link) {
   fullPhotoPopup.querySelector('.img-with-caption__caption').textContent = name;
-  fullPhotoPopup.querySelector('.img-with-caption__full-img').src = link;
-  renderPopupVisibility(fullPhotoPopup);
+  const image = fullPhotoPopup.querySelector('.img-with-caption__full-img');
+  image.src = link;
+  image.onload = function() {
+    renderPopupVisibility(fullPhotoPopup);
+  }
 }
 
 function initCardButtons(cardNode) {
