@@ -71,15 +71,12 @@ function openAddCardPopup() {
   renderPopupVisibility(addCardPopup);
 }
 
-function addCardElement() {
-  let name = addCardForm['name'].value;
-  let link = addCardForm['link'].value;
-  addCard(name, link);
-}
-
 function handleAddCardFormSubmit(e) {
   e.preventDefault();
-  addCardElement();
+  addCard(
+    addCardForm['name'].value,
+    addCardForm['link'].value
+  );
   addCardForm.reset();
   renderPopupVisibility(addCardPopup);
 }
@@ -87,7 +84,9 @@ function handleAddCardFormSubmit(e) {
 function getCardElement(name, link) {
   const cardTemplate = document.querySelector('#card').content;
   const cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector('.cards-grid__card-photo').src = link;
+  const image = cardElement.querySelector('.cards-grid__card-photo');
+  image.src = link;
+  image.alt += ": " + name;
   cardElement.querySelector('.cards-grid__card-caption').textContent = name;
   return cardElement;
 }
@@ -105,6 +104,7 @@ function handleOpenPhotoPopup(name, link) {
   fullPhotoPopup.querySelector('.img-with-caption__caption').textContent = name;
   const image = fullPhotoPopup.querySelector('.img-with-caption__full-img');
   image.src = link;
+  image.alt = name;
   image.onload = function() {
     renderPopupVisibility(fullPhotoPopup);
   }
