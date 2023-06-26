@@ -12,6 +12,10 @@
   background-color: transparent;
 }
 
+.popup-form__input-text::placeholder {
+  color: #c4c4c4;
+}
+
 .popup-form__input-text:focus {
   outline: none;
 }

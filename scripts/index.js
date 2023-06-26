@@ -25,25 +25,36 @@ const initialCards = [
   }
 ];
 
-let popup = document.querySelector('.popup');
-let openPopupButton = document.querySelector('.profile__edit-button');
-let closePopupButton = document.querySelector('.popup__close-button');
-let profileForm = document.querySelector('.profile-form');
-let titleElement = document.querySelector('.profile__title');
-let subtitleElement = document.querySelector('.profile__subtitle');
+const profilePopup = document.querySelector('#popup-profile');
+const addCardPopup = document.querySelector('#popup-add-card');
+const openProfilePopupBtn = document.querySelector('.profile__edit-button');
+const openAddCardPopupBtn = document.querySelector('.profile__add-card-button');
+const profileForm = getPopupForm(profilePopup);
+const addCardForm = getPopupForm(addCardPopup);
+const titleElement = document.querySelector('.profile__title');
+const subtitleElement = document.querySelector('.profile__subtitle');
 
-function handlePopupVisibility() {
-  popup.classList.toggle('popup_opened');
+function getPopupForm(thisPopup) {
+  return thisPopup.querySelector('.popup-form');
 }
 
-function fillForm() {
+function renderPopupVisibility(thisPopup) {
+  thisPopup.classList.toggle('popup_opened');
+}
+
+function initPopupClosingBtn(thisPopup) {
+  const closePopupBtn = thisPopup.querySelector('.popup__close-button');
+  closePopupBtn.addEventListener('click', () => renderPopupVisibility(thisPopup));
+}
+
+function fillProfileForm() {
   profileForm['name'].value = titleElement.textContent;
   profileForm['job'].value = subtitleElement.textContent;
 }
 
-function initPopup() {
-  fillForm();
-  handlePopupVisibility();
+function openProfilePopup() {
+  fillProfileForm();
+  renderPopupVisibility(profilePopup);
 }
 
 function fillProfileBlock() {
@@ -54,7 +65,11 @@ function fillProfileBlock() {
 function handleFormSubmit(e) {
   e.preventDefault();
   fillProfileBlock();
-  handlePopupVisibility();
+  renderProfilePopupVisibility();
+}
+
+function openAddCardPopup() {
+  renderPopupVisibility(addCardPopup);
 }
 
 function getCardElement(name, link) {
@@ -75,6 +90,8 @@ function initCards(cardDataArray) {
 }
 
 initCards(initialCards);
-openPopupButton.addEventListener('click', initPopup);
-closePopupButton.addEventListener('click', handlePopupVisibility);
+openProfilePopupBtn.addEventListener('click', openProfilePopup);
+openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
+initPopupClosingBtn(profilePopup);
+initPopupClosingBtn(addCardPopup);
 profileForm.addEventListener('submit', handleFormSubmit);
