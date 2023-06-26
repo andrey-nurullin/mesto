@@ -24,6 +24,7 @@
 @import url('../blocks/cards-grid/__card-caption/cards-grid__card-caption.css');
 @import url('../blocks/cards-grid/__like-button/cards-grid__like-button.css');
 @import url('../blocks/cards-grid/__like-button/_active/cards-grid__like-button_active.css');
+@import url('../blocks/cards-grid/__delete-button/cards-grid__delete-button.css');
 
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');
