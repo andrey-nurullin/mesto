@@ -1,4 +1,7 @@
-import {initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm, titleElement, subtitleElement} from './constants.js';
+import {
+  initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
+  titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage
+} from './constants.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
@@ -40,7 +43,7 @@ function openAddCardPopup() {
 
 function handleAddCardFormSubmit(e) {
   e.preventDefault();
-  addCard(
+  createAndAddCard(
     addCardForm['name'].value,
     addCardForm['link'].value
   );
@@ -68,13 +71,12 @@ function handleCardDelete(deleteBtn) {
 }
 
 function handleOpenPhotoPopup(name, link) {
-  fullPhotoPopup.querySelector('.img-with-caption__caption').textContent = name;
-  const image = fullPhotoPopup.querySelector('.img-with-caption__full-img');
-  image.src = link;
-  image.alt = name;
-  image.onload = function() {
+  fullPhotoPopupCaption.textContent = name;
+  fullPhotoPopupImage.src = link;
+  fullPhotoPopupImage.alt = name;
+  fullPhotoPopupImage.onload = function() {
     openPopup(fullPhotoPopup);
-  }
+  };
 }
 
 function initCardButtons(cardNode) {
@@ -90,16 +92,24 @@ function initOpenPhotoPopupBtn(cardNode, name, link) {
   openPhotoPopupBtn.addEventListener('click', () => handleOpenPhotoPopup(name, link));
 }
 
-function addCard(name, link) {
+function createCard(name, link) {
   const cardNode = getCardElement(name, link);
   initCardButtons(cardNode);
   initOpenPhotoPopupBtn(cardNode, name, link);
+  return cardNode;
+}
 
+function addCard(cardNode) {
   document.querySelector('.cards-grid').prepend(cardNode);
 }
 
-function addCards(cardDataArray) {
-  cardDataArray.forEach(cardData => addCard(cardData.name, cardData.link));
+function createAndAddCard(name, link) {
+  const card = createCard(name, link);
+  addCard(card);
+}
+
+function createAndAddCards(cardDataArray) {
+  cardDataArray.forEach(cardData => createAndAddCard(cardData.name, cardData.link));
 }
 
 function initFullPhotoPopup() {
@@ -119,7 +129,7 @@ function initAddCardPopup() {
   initPopupClosingBtn(addCardPopup);
 }
 
-addCards(initialCards);
+createAndAddCards(initialCards);
 initFullPhotoPopup();
 initProfilePopup();
 initAddCardPopup();

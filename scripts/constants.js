@@ -32,9 +32,14 @@ const profileForm = getPopupForm(profilePopup);
 const addCardForm = getPopupForm(addCardPopup);
 const titleElement = document.querySelector('.profile__title');
 const subtitleElement = document.querySelector('.profile__subtitle');
+const fullPhotoPopupImage = fullPhotoPopup.querySelector('.img-with-caption__full-img');
+const fullPhotoPopupCaption = fullPhotoPopup.querySelector('.img-with-caption__caption');
 
 function getPopupForm(thisPopup) {
   return thisPopup.querySelector('.popup-form');
 }
 
-export {initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm, titleElement, subtitleElement};
+export {
+  initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
+  titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage
+};
