@@ -1,24 +1,16 @@
-import {initialCards} from './constants.js';
-
-const profilePopup = document.querySelector('#popup-profile');
-const addCardPopup = document.querySelector('#popup-add-card');
-const fullPhotoPopup = document.querySelector('#popup-full-photo');
-const profileForm = getPopupForm(profilePopup);
-const addCardForm = getPopupForm(addCardPopup);
-const titleElement = document.querySelector('.profile__title');
-const subtitleElement = document.querySelector('.profile__subtitle');
-
-function getPopupForm(thisPopup) {
-  return thisPopup.querySelector('.popup-form');
-}
+import {initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm, titleElement, subtitleElement} from './constants.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
-  closePopupBtn.addEventListener('click', () => renderPopupVisibility(thisPopup));
+  closePopupBtn.addEventListener('click', () => closePopup(thisPopup));
 }
 
-function renderPopupVisibility(thisPopup) {
-  thisPopup.classList.toggle('popup_opened');
+function openPopup(thisPopup) {
+  thisPopup.classList.add('popup_opened');
+}
+
+function closePopup(thisPopup) {
+  thisPopup.classList.remove('popup_opened');
 }
 
 function fillProfileForm() {
@@ -28,7 +20,7 @@ function fillProfileForm() {
 
 function openProfilePopup() {
   fillProfileForm();
-  renderPopupVisibility(profilePopup);
+  openPopup(profilePopup);
 }
 
 function fillProfileBlock() {
@@ -39,11 +31,11 @@ function fillProfileBlock() {
 function handleProfileFormSubmit(e) {
   e.preventDefault();
   fillProfileBlock();
-  renderPopupVisibility(profileForm);
+  closePopup(profilePopup);
 }
 
 function openAddCardPopup() {
-  renderPopupVisibility(addCardPopup);
+  openPopup(addCardPopup);
 }
 
 function handleAddCardFormSubmit(e) {
@@ -53,7 +45,7 @@ function handleAddCardFormSubmit(e) {
     addCardForm['link'].value
   );
   addCardForm.reset();
-  renderPopupVisibility(addCardPopup);
+  closePopup(addCardPopup);
 }
 
 function getCardElement(name, link) {
@@ -81,7 +73,7 @@ function handleOpenPhotoPopup(name, link) {
   image.src = link;
   image.alt = name;
   image.onload = function() {
-    renderPopupVisibility(fullPhotoPopup);
+    openPopup(fullPhotoPopup);
   }
 }
 

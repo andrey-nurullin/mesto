@@ -25,4 +25,16 @@ const initialCards = [
   }
 ];
 
-export {initialCards};
+const profilePopup = document.querySelector('#popup-profile');
+const addCardPopup = document.querySelector('#popup-add-card');
+const fullPhotoPopup = document.querySelector('#popup-full-photo');
+const profileForm = getPopupForm(profilePopup);
+const addCardForm = getPopupForm(addCardPopup);
+const titleElement = document.querySelector('.profile__title');
+const subtitleElement = document.querySelector('.profile__subtitle');
+
+function getPopupForm(thisPopup) {
+  return thisPopup.querySelector('.popup-form');
+}
+
+export {initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm, titleElement, subtitleElement};
