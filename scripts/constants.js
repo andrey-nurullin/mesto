@@ -25,6 +25,15 @@ const initialCards = [
   }
 ];
 
+const cssFormData = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__button',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_visible'
+}
+
 const profilePopup = document.querySelector('#popup-profile');
 const addCardPopup = document.querySelector('#popup-add-card');
 const fullPhotoPopup = document.querySelector('#popup-full-photo');
@@ -36,7 +45,7 @@ const fullPhotoPopupImage = fullPhotoPopup.querySelector('.img-with-caption__ful
 const fullPhotoPopupCaption = fullPhotoPopup.querySelector('.img-with-caption__caption');
 
 function getPopupForm(thisPopup) {
-  return thisPopup.querySelector('.popup-form');
+  return thisPopup.querySelector(cssFormData.formSelector);
 }
 
 export {

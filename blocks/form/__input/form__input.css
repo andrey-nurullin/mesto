@@ -1,8 +1,8 @@
-.popup-form__input-text {
+.form__input {
   box-sizing: border-box;
   width: 100%;
   border: 0;
-  margin: 0 0 25px;
+  margin: 0;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -12,10 +12,10 @@
   background-color: transparent;
 }
 
-.popup-form__input-text::placeholder {
+.form__input::placeholder {
   color: #c4c4c4;
 }
 
-.popup-form__input-text:focus {
+.form__input:focus {
   outline: none;
 }

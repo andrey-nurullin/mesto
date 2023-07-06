@@ -1,9 +1,9 @@
-.popup-form__button {
+.form__button {
   box-sizing: border-box;
   width: 100%;
   min-height: 50px;
   border: 0;
-  margin: 24px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   border-radius: 2px;
   cursor: pointer;
@@ -13,15 +13,15 @@
   background-color: #000;
   color: #fff;
   text-align: center;
-  transition: opacity .4s;
+  transition: opacity .2s, background-color .2s;
 }
 
-.popup-form__button:hover {
+.form__button:hover {
   opacity: .8;
 }
 
 @media (max-width: 550px) {
-  .popup-form__button {
+  .form__button {
     font-size: 14px;
     line-height: 17px;
     margin: 21px 0 0;
