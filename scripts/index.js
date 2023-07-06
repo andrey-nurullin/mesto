@@ -21,12 +21,29 @@ function initPopupClosing(thisPopup) {
   initPopupClosingOverlay(thisPopup);
 }
 
+function handlePopupHotKey(e) {
+  if (e.key === 'Escape') {
+    closePopup(e.currentTarget);
+  }
+}
+
+function handlePopupTransitionEnd(e) {
+  if ((e.target === e.currentTarget) && (e.propertyName === 'visibility')) {
+    //The current popup gets focus
+    e.currentTarget.focus();
+  }
+}
+
 function openPopup(thisPopup) {
+  thisPopup.addEventListener('transitionend', handlePopupTransitionEnd);
   thisPopup.classList.add('popup_opened');
+  thisPopup.addEventListener('keydown', handlePopupHotKey);
 }
 
 function closePopup(thisPopup) {
+  thisPopup.removeEventListener('transitionend', handlePopupTransitionEnd);
   thisPopup.classList.remove('popup_opened');
+  thisPopup.removeEventListener('keydown', handlePopupHotKey);
 }
 
 function fillProfileForm() {
