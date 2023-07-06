@@ -8,6 +8,19 @@ function initPopupClosingBtn(thisPopup) {
   closePopupBtn.addEventListener('click', () => closePopup(thisPopup));
 }
 
+function initPopupClosingOverlay(thisPopup) {
+  thisPopup.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      closePopup(thisPopup);
+    };
+  });
+}
+
+function initPopupClosing(thisPopup) {
+  initPopupClosingBtn(thisPopup);
+  initPopupClosingOverlay(thisPopup);
+}
+
 function openPopup(thisPopup) {
   thisPopup.classList.add('popup_opened');
 }
@@ -114,19 +127,19 @@ function createAndAddCards(cardDataArray) {
 
 function initFullPhotoPopup() {
   // The opening of the pop-up is initialized when each card is initialized
-  initPopupClosingBtn(fullPhotoPopup);
+  initPopupClosing(fullPhotoPopup);
 }
 
 function initProfilePopup() {
   const openProfilePopupBtn = document.querySelector('.profile__edit-button');
   openProfilePopupBtn.addEventListener('click', openProfilePopup);
-  initPopupClosingBtn(profilePopup);
+  initPopupClosing(profilePopup);
 }
 
 function initAddCardPopup() {
   const openAddCardPopupBtn = document.querySelector('.profile__add-card-button');
   openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
-  initPopupClosingBtn(addCardPopup);
+  initPopupClosing(addCardPopup);
 }
 
 createAndAddCards(initialCards);
