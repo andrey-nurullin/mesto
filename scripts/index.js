@@ -1,10 +1,10 @@
 import {
   initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
   titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
-  cssSettings
+  cssFormData
 } from './constants.js';
 
-import { enableValidation } from './validate.js';
+import { enableValidation, handleValidation, resetFormState } from './validate.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
@@ -54,11 +54,6 @@ function fillProfileForm() {
   profileForm['job'].value = subtitleElement.textContent;
 }
 
-function openProfilePopup() {
-  fillProfileForm();
-  openPopup(profilePopup);
-}
-
 function fillProfileBlock() {
   titleElement.textContent = profileForm['name'].value;
   subtitleElement.textContent = profileForm['job'].value;
@@ -70,18 +65,15 @@ function handleProfileFormSubmit(e) {
   closePopup(profilePopup);
 }
 
-function openAddCardPopup() {
-  openPopup(addCardPopup);
-}
-
 function handleAddCardFormSubmit(e) {
   e.preventDefault();
   createAndAddCard(
     addCardForm['title'].value,
     addCardForm['link'].value
   );
-  addCardForm.reset();
   closePopup(addCardPopup);
+  addCardForm.reset();
+  resetFormState(addCardForm);
 }
 
 function getCardElement(name, link) {
@@ -150,11 +142,20 @@ function initFullPhotoPopup() {
   initPopupClosing(fullPhotoPopup);
 }
 
+function openProfilePopup() {
+  fillProfileForm();
+  handleValidation(profileForm);
+  openPopup(profilePopup);
+}
+
+function openAddCardPopup() {
+  openPopup(addCardPopup);
+}
+
 function initProfilePopup() {
   const openProfilePopupBtn = document.querySelector('.profile__edit-button');
   openProfilePopupBtn.addEventListener('click', openProfilePopup);
   initPopupClosing(profilePopup);
-  fillProfileForm();
 }
 
 function initAddCardPopup() {
@@ -169,4 +170,4 @@ initProfilePopup();
 initAddCardPopup();
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
-enableValidation(cssSettings);
+enableValidation(cssFormData);

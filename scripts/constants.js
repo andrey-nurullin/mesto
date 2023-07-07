@@ -25,7 +25,7 @@ const initialCards = [
   }
 ];
 
-const cssSettings = {
+const cssFormData = {
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__button',
@@ -45,11 +45,11 @@ const fullPhotoPopupImage = fullPhotoPopup.querySelector('.img-with-caption__ful
 const fullPhotoPopupCaption = fullPhotoPopup.querySelector('.img-with-caption__caption');
 
 function getPopupForm(thisPopup) {
-  return thisPopup.querySelector(cssSettings.formSelector);
+  return thisPopup.querySelector(cssFormData.formSelector);
 }
 
 export {
   initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
   titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
-  cssSettings
+  cssFormData
 };
