@@ -1,7 +1,7 @@
 import {
   initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
   titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
-  cssFormData
+  cardsContainer, ssFormData
 } from './constants.js';
 
 import { enableValidation, handleValidation, resetFormState, isFormValid } from './validate.js';
@@ -131,7 +131,7 @@ function createCard(name, link) {
 }
 
 function addCard(cardNode) {
-  document.querySelector('.cards-grid').prepend(cardNode);
+  cardsContainer.prepend(cardNode);
 }
 
 function createAndAddCard(name, link) {
