@@ -78,6 +78,11 @@ function resetFormState(form) {
   disableButton( getSubmitButton(form) );
 }
 
+function isFormValid(form) {
+  const inputList = getInputList(form);
+  return !hasInvalidInput(inputList);
+}
+
 function handleValidation(form) {
   const inputList = getInputList(form);
   const submitButton = getSubmitButton(form);
@@ -98,4 +103,4 @@ function enableValidation(cssFormData) {
   });
 }
 
-export { enableValidation, handleValidation, resetFormState };
+export { enableValidation, handleValidation, resetFormState, isFormValid };

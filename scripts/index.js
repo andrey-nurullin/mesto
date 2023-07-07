@@ -4,7 +4,7 @@ import {
   cssFormData
 } from './constants.js';
 
-import { enableValidation, handleValidation, resetFormState } from './validate.js';
+import { enableValidation, handleValidation, resetFormState, isFormValid } from './validate.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
@@ -59,21 +59,27 @@ function fillProfileBlock() {
   subtitleElement.textContent = profileForm['job'].value;
 }
 
-function handleProfileFormSubmit(e) {
-  e.preventDefault();
-  fillProfileBlock();
-  closePopup(profilePopup);
+function handleProfileFormSubmit() {
+  if (isFormValid(profileForm)) {
+    fillProfileBlock();
+    closePopup(profilePopup);
+  } else {
+    handleValidation(profileForm);
+  }
 }
 
-function handleAddCardFormSubmit(e) {
-  e.preventDefault();
-  createAndAddCard(
-    addCardForm['title'].value,
-    addCardForm['link'].value
-  );
-  closePopup(addCardPopup);
-  addCardForm.reset();
-  resetFormState(addCardForm);
+function handleAddCardFormSubmit() {
+  if (isFormValid(addCardForm)) {
+    createAndAddCard(
+      addCardForm['title'].value,
+      addCardForm['link'].value
+    );
+    closePopup(addCardPopup);
+    addCardForm.reset();
+    resetFormState(addCardForm);
+  } else {
+    handleValidation(addCardForm);
+  }
 }
 
 function getCardElement(name, link) {
