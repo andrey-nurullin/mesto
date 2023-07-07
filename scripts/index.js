@@ -1,10 +1,10 @@
 import {
   initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
   titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
-  cardsContainer, ssFormData
+  cardsContainer, cssFormData
 } from './constants.js';
 
-import { enableValidation, handleValidation, resetFormState, isFormValid } from './validate.js';
+import { enableValidation, resetFormState } from './validate.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
@@ -60,26 +60,16 @@ function fillProfileBlock() {
 }
 
 function handleProfileFormSubmit() {
-  if (isFormValid(profileForm)) {
-    fillProfileBlock();
-    closePopup(profilePopup);
-  } else {
-    handleValidation(profileForm);
-  }
+  fillProfileBlock();
+  closePopup(profilePopup);
 }
 
 function handleAddCardFormSubmit() {
-  if (isFormValid(addCardForm)) {
-    createAndAddCard(
-      addCardForm['title'].value,
-      addCardForm['link'].value
-    );
-    closePopup(addCardPopup);
-    addCardForm.reset();
-    resetFormState(addCardForm);
-  } else {
-    handleValidation(addCardForm);
-  }
+  createAndAddCard(
+    addCardForm['title'].value,
+    addCardForm['link'].value
+  );
+  closePopup(addCardPopup);
 }
 
 function getCardElement(name, link) {
@@ -150,11 +140,12 @@ function initFullPhotoPopup() {
 
 function openProfilePopup() {
   fillProfileForm();
-  handleValidation(profileForm);
   openPopup(profilePopup);
 }
 
 function openAddCardPopup() {
+  addCardForm.reset();
+  resetFormState(addCardForm, cssFormData);
   openPopup(addCardPopup);
 }
 
@@ -174,6 +165,7 @@ createAndAddCards(initialCards);
 initFullPhotoPopup();
 initProfilePopup();
 initAddCardPopup();
+fillProfileForm();
+enableValidation(cssFormData);
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
-enableValidation(cssFormData);
