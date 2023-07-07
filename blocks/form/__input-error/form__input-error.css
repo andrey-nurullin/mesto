@@ -1,7 +1,7 @@
 .form__input-error {
   visibility: hidden;
   position: relative;
-  top: 2px;
+  top: 4px;
   padding: 0 2px;
   min-height: 28px;
   font-size: 12px;

@@ -1,7 +1,10 @@
 import {
   initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
-  titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage
+  titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
+  cssSettings
 } from './constants.js';
+
+import { enableValidation } from './validate.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
@@ -12,7 +15,7 @@ function initPopupClosingOverlay(thisPopup) {
   thisPopup.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
       closePopup(thisPopup);
-    };
+    }
   });
 }
 
@@ -74,7 +77,7 @@ function openAddCardPopup() {
 function handleAddCardFormSubmit(e) {
   e.preventDefault();
   createAndAddCard(
-    addCardForm['name'].value,
+    addCardForm['title'].value,
     addCardForm['link'].value
   );
   addCardForm.reset();
@@ -151,6 +154,7 @@ function initProfilePopup() {
   const openProfilePopupBtn = document.querySelector('.profile__edit-button');
   openProfilePopupBtn.addEventListener('click', openProfilePopup);
   initPopupClosing(profilePopup);
+  fillProfileForm();
 }
 
 function initAddCardPopup() {
@@ -165,3 +169,4 @@ initProfilePopup();
 initAddCardPopup();
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
+enableValidation(cssSettings);
