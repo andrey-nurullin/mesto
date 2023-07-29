@@ -4,7 +4,7 @@ export default class Card {
     this._name = name;
     this._link = link;
     this._handlePhotoClick = handlePhotoClick;
-    this._cardNode = this._getCardNode(templateSelector);
+    this._setCardNode(templateSelector);
     this._setEventListeners();
   }
 
@@ -19,18 +19,16 @@ export default class Card {
     const deleteBtn = this._cardNode.querySelector('.cards-grid__delete-button');
     deleteBtn.addEventListener('click', () => this._handleCardDelete(deleteBtn));
 
-    const photoButton = this._cardNode.querySelector('.cards-grid__card-photo');
-    photoButton.addEventListener('click', () => this._handlePhotoClick(this._name, this._link));
+    this._image.addEventListener('click', () => this._handlePhotoClick(this._name, this._link));
   }
 
-  _getCardNode(templateSelector) {
+  _setCardNode(templateSelector) {
     const cardTemplate = document.querySelector(templateSelector).content;
-    const cardElement = cardTemplate.cloneNode(true);
-    const image = cardElement.querySelector('.cards-grid__card-photo');
-    image.src = this._link;
-    image.alt += ": " + this._name;
-    cardElement.querySelector('.cards-grid__card-caption').textContent = this._name;
-    return cardElement;
+    this._cardNode = cardTemplate.cloneNode(true);
+    this._image = this._cardNode.querySelector('.cards-grid__card-photo');
+    this._image.src = this._link;
+    this._image.alt += ": " + this._name;
+    this._cardNode.querySelector('.cards-grid__card-caption').textContent = this._name;
   }
 
   _handleCardLike(likeBtn) {
