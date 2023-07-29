@@ -4,7 +4,7 @@ import {
   cardsContainer, cssFormData
 } from './constants.js';
 
-import { enableValidation, resetFormState } from './validate.js';
+import FormValidator from './FormValidator.js';
 
 function initPopupClosingBtn(thisPopup) {
   const closePopupBtn = thisPopup.querySelector('.popup__close-button');
@@ -145,7 +145,6 @@ function openProfilePopup() {
 
 function openAddCardPopup() {
   addCardForm.reset();
-  resetFormState(addCardForm, cssFormData);
   openPopup(addCardPopup);
 }
 
@@ -161,11 +160,19 @@ function initAddCardPopup() {
   initPopupClosing(addCardPopup);
 }
 
+function initFormValidaton(cssFormData) {
+  const formList = Array.from(document.querySelectorAll(cssFormData.formSelector));
+  formList.forEach((form) => {
+    const validator = new FormValidator(form, cssFormData);
+    validator.enableValidation();
+  });
+}
+
 createAndAddCards(initialCards);
 initFullPhotoPopup();
 initProfilePopup();
 initAddCardPopup();
 fillProfileForm();
-enableValidation(cssFormData);
+initFormValidaton(cssFormData);
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
