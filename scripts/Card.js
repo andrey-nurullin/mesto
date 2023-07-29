@@ -41,9 +41,4 @@ export default class Card {
     const cardNode = deleteBtn.closest('.cards-grid__card');
     cardNode.remove();
   }
-
-  _handlePhotoBtnClick() {
-
-  }
-
 }
