@@ -44,6 +44,7 @@ const subtitleElement = document.querySelector('.profile__subtitle');
 const fullPhotoPopupImage = fullPhotoPopup.querySelector('.img-with-caption__full-img');
 const fullPhotoPopupCaption = fullPhotoPopup.querySelector('.img-with-caption__caption');
 const cardsContainer = document.querySelector('.cards-grid');
+const cardTemplateSelector = '#card';
 
 function getPopupForm(thisPopup) {
   return thisPopup.querySelector(cssFormData.formSelector);
@@ -52,5 +53,5 @@ function getPopupForm(thisPopup) {
 export {
   initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
   titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
-  cardsContainer, cssFormData
+  cardsContainer, cssFormData, cardTemplateSelector
 };
