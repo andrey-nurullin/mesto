@@ -1,34 +1,36 @@
 export default class Card {
 
-  constructor(name, link, templateSelector) {
+  constructor({name, link}, templateSelector, handlePhotoClick) {
     this._name = name;
     this._link = link;
-    this._templateSelector = templateSelector;
+    this._handlePhotoClick = handlePhotoClick;
+    this._cardNode = this._getCardNode(templateSelector);
+    this._setEventListeners();
   }
 
   getView() {
-    const cardNode = this._getCardElement();
-    this._initCardButtons(cardNode);
-    this._initOpenPhotoPopupBtn(cardNode);
-    return cardNode;
+    return this._cardNode;
   }
 
-  _getCardElement() {
-    const cardTemplate = document.querySelector(this._templateSelector).content;
+  _setEventListeners() {
+    const likeBtn = this._cardNode.querySelector('.cards-grid__like-button');
+    likeBtn.addEventListener('click', () => this._handleCardLike(likeBtn));
+
+    const deleteBtn = this._cardNode.querySelector('.cards-grid__delete-button');
+    deleteBtn.addEventListener('click', () => this._handleCardDelete(deleteBtn));
+
+    const photoButton = this._cardNode.querySelector('.cards-grid__card-photo');
+    photoButton.addEventListener('click', () => this._handlePhotoClick(this._name, this._link));
+  }
+
+  _getCardNode(templateSelector) {
+    const cardTemplate = document.querySelector(templateSelector).content;
     const cardElement = cardTemplate.cloneNode(true);
     const image = cardElement.querySelector('.cards-grid__card-photo');
     image.src = this._link;
     image.alt += ": " + this._name;
     cardElement.querySelector('.cards-grid__card-caption').textContent = this._name;
     return cardElement;
-  }
-
-  _initCardButtons(cardNode) {
-    const likeBtn = cardNode.querySelector('.cards-grid__like-button');
-    likeBtn.addEventListener('click', () => this._handleCardLike(likeBtn));
-
-    const deleteBtn = cardNode.querySelector('.cards-grid__delete-button');
-    deleteBtn.addEventListener('click', () => this._handleCardDelete(deleteBtn));
   }
 
   _handleCardLike(likeBtn) {
@@ -40,19 +42,8 @@ export default class Card {
     cardNode.remove();
   }
 
-  _initOpenPhotoPopupBtn(cardNode) {
-    const photoButton = cardNode.querySelector('.cards-grid__card-photo');
-    photoButton.addEventListener('click', () => this._handlePhotoBtnClick(cardNode));
-  }
+  _handlePhotoBtnClick() {
 
-  _handlePhotoBtnClick(cardNode) {
-    const photoBtnClick = new CustomEvent('photoclick', {
-      detail: {
-        name: this._name,
-        link: this._link
-      }
-    });
-    cardNode.dispatchEvent(photoBtnClick);
   }
 
 }

@@ -66,14 +66,14 @@ function handleProfileFormSubmit() {
 }
 
 function handleAddCardFormSubmit() {
-  createAndAddCard({
+  addCard( createCard({
     name: addCardForm['title'].value,
     link: addCardForm['link'].value
-  });
+  }));
   closePopup(addCardPopup);
 }
 
-function handleOpenPhotoPopup(name, link) {
+function openPhotoPopup(name, link) {
   fullPhotoPopupCaption.textContent = name;
   fullPhotoPopupImage.src = link;
   fullPhotoPopupImage.alt = name;
@@ -82,25 +82,19 @@ function handleOpenPhotoPopup(name, link) {
   }
 }
 
-function initCardPhotoPopup(cardElement) {
-  cardElement.addEventListener('photoclick', (e) => {
-    handleOpenPhotoPopup(e.detail.name, e.detail.link);
-  });
+function createCard(cardData) {
+  const card = new Card(cardData, cardTemplateSelector, openPhotoPopup);
+  return card.getView();
 }
 
 function addCard(cardNode) {
   cardsContainer.prepend(cardNode);
 }
 
-function createAndAddCard({name, link}) {
-  const card = new Card(name, link, cardTemplateSelector);
-  const cardNode = card.getView();
-  initCardPhotoPopup(cardNode);
-  addCard(cardNode);
-}
-
-function createAndAddCards(cardDataArray) {
-  cardDataArray.forEach(cardData => createAndAddCard(cardData));
+function renderCards(cardDataArray) {
+  cardDataArray.forEach(
+    cardData => addCard( createCard(cardData) )
+  );
 }
 
 function initFullPhotoPopup() {
@@ -110,11 +104,13 @@ function initFullPhotoPopup() {
 
 function openProfilePopup() {
   fillProfileForm();
+  validators[ profileForm.id ].resetValidation();
   openPopup(profilePopup);
 }
 
 function openAddCardPopup() {
   addCardForm.reset();
+  validators[ addCardForm.id ].resetValidation();
   openPopup(addCardPopup);
 }
 
@@ -130,19 +126,19 @@ function initAddCardPopup() {
   initPopupClosing(addCardPopup);
 }
 
-function initFormValidaton(cssFormData) {
-  const formList = Array.from( document.querySelectorAll(cssFormData.formSelector) );
-  formList.forEach((form) => {
-    const validator = new FormValidator(form, cssFormData);
-    validator.enableValidation();
-  });
-}
-
-createAndAddCards(initialCards);
+renderCards(initialCards);
 initFullPhotoPopup();
 initProfilePopup();
 initAddCardPopup();
 fillProfileForm();
-initFormValidaton(cssFormData);
+
+const formList = Array.from( document.querySelectorAll(cssFormData.formSelector) );
+const validators = [];
+formList.forEach((form) => {
+  const validator = new FormValidator(form, cssFormData);
+  validator.enableValidation();
+  validators[ form.id ] = validator;
+});
+
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
