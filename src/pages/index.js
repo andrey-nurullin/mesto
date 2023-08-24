@@ -6,6 +6,7 @@ import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Popup from '../components/Popup';
 
 function fillProfileBlock() {
   const profileData = profilePopup.getFormData();
@@ -49,26 +50,39 @@ function openProfilePopup() {
   profilePopup.open();
 }
 
-const formList = Array.from( document.querySelectorAll(cssFormData.formSelector) );
+function initValidators(validatorsArray) {
+  const formList = Array.from( document.querySelectorAll(cssFormData.formSelector) );
+  formList.forEach((form) => {
+    const validator = new FormValidator(form, cssFormData);
+    validator.enableValidation();
+    validatorsArray[ form.id ] = validator;
+  });
+}
+
+/**
+ * @param {Popup} popup
+ * @param {String} openBtnSelector
+ * @callback handleFormSubmit
+ */
+function initPopup(popup, openBtnSelector, handleFormSubmit) {
+  popup.setEventListeners();
+  if (openBtnSelector && handleFormSubmit) {
+    const openPopupBtn = document.querySelector(openBtnSelector);
+    openPopupBtn.addEventListener('click', handleFormSubmit)
+  }
+}
+
 const validators = [];
-formList.forEach((form) => {
-  const validator = new FormValidator(form, cssFormData);
-  validator.enableValidation();
-  validators[ form.id ] = validator;
-});
+initValidators(validators);
 
 const fullPhotoPopup = new PopupWithImage('#popup-full-photo');
-fullPhotoPopup.setEventListeners();
+initPopup(fullPhotoPopup);
 
 const profilePopup = new PopupWithForm('#popup-profile', handleProfileFormSubmit);
-profilePopup.setEventListeners();
-const openProfilePopupBtn = document.querySelector('.profile__edit-button');
-openProfilePopupBtn.addEventListener('click', openProfilePopup);
+initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
 
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
-addCardPopup.setEventListeners();
-const openAddCardPopupBtn = document.querySelector('.profile__add-card-button');
-openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
+initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
 
 const userInfo = new UserInfo({
   selectorName: '.profile__title',
