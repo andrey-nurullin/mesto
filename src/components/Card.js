@@ -1,9 +1,9 @@
 export default class Card {
 
-  constructor({name, link}, templateSelector, handlePhotoClick) {
+  constructor({name, link}, templateSelector, handleCardClick) {
     this._name = name;
     this._link = link;
-    this._handlePhotoClick = handlePhotoClick;
+    this._handleCardClick = handleCardClick;
     this._setCardNode(templateSelector);
     this._setEventListeners();
   }
@@ -19,7 +19,7 @@ export default class Card {
     const deleteBtn = this._cardNode.querySelector('.cards-grid__delete-button');
     deleteBtn.addEventListener('click', () => this._handleCardDelete(deleteBtn));
 
-    this._image.addEventListener('click', () => this._handlePhotoClick(this._name, this._link));
+    this._image.addEventListener('click', () => this._handleCardClick(this._name, this._link));
   }
 
   _setCardNode(templateSelector) {

@@ -34,24 +34,6 @@ const cssFormData = {
   errorClass: 'form__input-error_visible'
 }
 
-const profilePopup = document.querySelector('#popup-profile');
-const addCardPopup = document.querySelector('#popup-add-card');
-const fullPhotoPopup = document.querySelector('#popup-full-photo');
-const profileForm = getPopupForm(profilePopup);
-const addCardForm = getPopupForm(addCardPopup);
-const titleElement = document.querySelector('.profile__title');
-const subtitleElement = document.querySelector('.profile__subtitle');
-const fullPhotoPopupImage = fullPhotoPopup.querySelector('.img-with-caption__full-img');
-const fullPhotoPopupCaption = fullPhotoPopup.querySelector('.img-with-caption__caption');
-const cardsContainer = document.querySelector('.cards-grid');
-const cardTemplateSelector = '#card';
-
-function getPopupForm(thisPopup) {
-  return thisPopup.querySelector(cssFormData.formSelector);
-}
-
 export {
-  initialCards, profilePopup, addCardPopup, fullPhotoPopup, profileForm, addCardForm,
-  titleElement, subtitleElement, fullPhotoPopupCaption, fullPhotoPopupImage,
-  cardsContainer, cssFormData, cardTemplateSelector
+  initialCards, cssFormData
 };
