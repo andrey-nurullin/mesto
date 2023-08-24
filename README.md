@@ -6,6 +6,7 @@
 * HTML 5
 * CSS 3
 * JS
+* Webpack
 * Git
 
 **Посмотрите на проект**
