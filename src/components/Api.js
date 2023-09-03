@@ -17,11 +17,15 @@ export default class Api {
     return this._doRequest('/cards');
   }
 
+  addCard(data) {
+    return this._doRequest('/cards', 'POST', data);
+  }
+
   /**
    * @param {String} dataUrl Url path to requested data
    * @param {String} method
    * @param {JSON} data
-   * @returns
+   * @returns {Promise}
    */
   _doRequest(dataUrl, method, data) {
     return fetch(this._baseUrl + dataUrl, {

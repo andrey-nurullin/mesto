@@ -32,8 +32,13 @@ function renderCard(cardData) {
 
 function handleAddCardFormSubmit() {
   const formData = addCardPopup.getFormData();
-  const newCardData = Object.fromEntries( formData.entries() );
-  renderCard(newCardData);
+  const rawCardData = Object.fromEntries( formData.entries() );
+  api.addCard(rawCardData)
+    .then(cardData => {
+      renderCard(cardData);
+      console.log(cardData);
+    })
+    .catch(handleError);
   addCardPopup.close();
 }
 
