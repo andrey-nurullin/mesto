@@ -16,7 +16,7 @@ function handleProfileFormSubmit() {
     .then(data => {
       userInfoPanel.setUserInfo(data);
     })
-    .catch(error => console.log(error));
+    .catch(handleError);
   profilePopup.close();
 }
 
@@ -72,6 +72,10 @@ function initPopup(popup, openBtnSelector, handleFormSubmit) {
   }
 }
 
+function handleError(error) {
+  console.log(error);
+}
+
 const userInfoPanel = new UserInfo({
   selectorName: '.profile__title',
   selectorAbout: '.profile__subtitle',
@@ -81,7 +85,7 @@ const userInfoPanel = new UserInfo({
 const api = new Api(apiConfig);
 api.getUserInfo()
   .then(data => userInfoPanel.setUserInfo(data))
-  .catch(error => console.log(error));
+  .catch(handleError);
 
 const validators = [];
 initValidators(validators);
@@ -99,6 +103,6 @@ const cardsSection = new Section(renderCard, '.cards-grid');
 
 api.getInitialCards()
   .then(data => cardsSection.renderItems(data))
-  .catch(error => console.log(error));
+  .catch(handleError);
 
 
