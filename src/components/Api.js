@@ -6,20 +6,28 @@ export default class Api {
   }
 
   getUserInfo() {
-    return this._getData('/users/me');
+    return this._doRequest('/users/me');
+  }
+
+  setUserInfo(data) {
+    return this._doRequest('/users/me', 'PATCH', data);
   }
 
   getInitialCards() {
-    return this._getData('/cards');
+    return this._doRequest('/cards');
   }
 
   /**
-   * @param {String} dataUrl Path to requested data
-   * @returns {Promise}
+   * @param {String} dataUrl Url path to requested data
+   * @param {String} method
+   * @param {JSON} data
+   * @returns
    */
-  _getData(dataUrl) {
+  _doRequest(dataUrl, method, data) {
     return fetch(this._baseUrl + dataUrl, {
+      method: method,
       headers: this._headers,
+      body: JSON.stringify(data)
     }).then((response) => {
       if (response.ok) {
         return response.json();
@@ -27,6 +35,4 @@ export default class Api {
       return Promise.reject(new Error(`Error status: ${response.status}`));
     })
   }
-
-  // другие методы работы с API
 }

@@ -9,16 +9,11 @@ import UserInfo from '../components/UserInfo.js';
 import Popup from '../components/Popup';
 import Api from '../components/Api';
 
-function fillProfileBlock() {
-  const profileData = profilePopup.getFormData();
-  userInfo.setUserInfo({
-    name: profileData.get('name'),
-    about: profileData.get('about')
-  });
-}
-
 function handleProfileFormSubmit() {
-  fillProfileBlock();
+  const formData = profilePopup.getFormData();
+  const newUserData = Object.fromEntries( formData.entries() );
+  userInfo.setUserInfo(newUserData);
+  api.setUserInfo(newUserData);
   profilePopup.close();
 }
 
@@ -33,11 +28,9 @@ function renderCard(cardData) {
 }
 
 function handleAddCardFormSubmit() {
-  const newCardData = addCardPopup.getFormData();
-  renderCard({
-    name: newCardData.get('name'),
-    link: newCardData.get('link')
-  });
+  const formData = addCardPopup.getFormData();
+  const newCardData = Object.fromEntries( formData.entries() );
+  renderCard(newCardData);
   addCardPopup.close();
 }
 
@@ -74,12 +67,6 @@ function initPopup(popup, openBtnSelector, handleFormSubmit) {
     const openPopupBtn = document.querySelector(openBtnSelector);
     openPopupBtn.addEventListener('click', handleFormSubmit)
   }
-}
-
-function setUserData({name, about, avatar}) {
-  userInfo.setName(name);
-  userInfo.setAbout(about);
-  userInfo.setAvatar(avatar);
 }
 
 const userInfo = new UserInfo({
