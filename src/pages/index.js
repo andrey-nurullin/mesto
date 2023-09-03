@@ -1,5 +1,5 @@
 import './index.css';
-import { initialCards, cssFormData, apiConfig } from '../utils/constants.js';
+import { cssFormData, apiConfig } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -29,7 +29,7 @@ function renderCard(cardData) {
     fullPhotoPopup.open.bind(fullPhotoPopup)
   );
   const cardElement = card.getView();
-  cardsSection.addItem(cardElement);
+  this.addItem(cardElement);
 }
 
 function handleAddCardFormSubmit() {
@@ -105,11 +105,17 @@ initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
 initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
 
-const cardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard
-  },
-  '.cards-grid'
-);
-cardsSection.renderItems();
+api.getInitialCards()
+  .then(data => {
+    const cardsSection = new Section(
+      {
+        items: data,
+        renderer: renderCard
+      },
+      '.cards-grid'
+    );
+    cardsSection.renderItems();
+  })
+  .catch(error => console.log(error));
+
+
