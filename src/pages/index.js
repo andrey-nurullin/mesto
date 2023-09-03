@@ -27,7 +27,7 @@ function renderCard(cardData) {
     fullPhotoPopup.open.bind(fullPhotoPopup)
   );
   const cardElement = card.getView();
-  this.addItem(cardElement);
+  cardsSection.addItem(cardElement);
 }
 
 function handleAddCardFormSubmit() {
@@ -95,17 +95,10 @@ initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
 initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
 
+const cardsSection = new Section(renderCard, '.cards-grid');
+
 api.getInitialCards()
-  .then(data => {
-    const cardsSection = new Section(
-      {
-        items: data,
-        renderer: renderCard
-      },
-      '.cards-grid'
-    );
-    cardsSection.renderItems();
-  })
+  .then(data => cardsSection.renderItems(data))
   .catch(error => console.log(error));
 
 
