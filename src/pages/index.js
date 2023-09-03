@@ -4,6 +4,7 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Popup from '../components/Popup';
@@ -13,9 +14,7 @@ function handleProfileFormSubmit() {
   const formData = profilePopup.getFormData();
   const newUserData = Object.fromEntries( formData.entries() );
   api.setUserInfo(newUserData)
-    .then(data => {
-      userInfoPanel.setUserInfo(data);
-    })
+    .then(data => userInfoPanel.setUserInfo(data))
     .catch(handleError);
   profilePopup.close();
 }
@@ -24,20 +23,31 @@ function renderCard(cardData) {
   const card = new Card(
     cardData,
     '#card',
-    fullPhotoPopup.open.bind(fullPhotoPopup)
+    userInfoPanel.getUserInfo().get('_id'),
+    fullPhotoPopup.open.bind(fullPhotoPopup),
+    openConfirmDeleteCardPopup
   );
   const cardElement = card.getView();
   cardsSection.addItem(cardElement);
+}
+
+function openConfirmDeleteCardPopup(card) {
+  confirmDeleteCardPopup.open();
+  confirmDeleteCardPopup.setConfirmHandler(() => {
+    api.deleteCard(card.getId())
+      .then(() => card.remove())
+      .catch(handleError)
+      .finally(() => {
+        confirmDeleteCardPopup.close();
+      });
+  });
 }
 
 function handleAddCardFormSubmit() {
   const formData = addCardPopup.getFormData();
   const rawCardData = Object.fromEntries( formData.entries() );
   api.addCard(rawCardData)
-    .then(cardData => {
-      renderCard(cardData);
-      console.log(cardData);
-    })
+    .then(cardData => renderCard(cardData))
     .catch(handleError);
   addCardPopup.close();
 }
@@ -87,11 +97,6 @@ const userInfoPanel = new UserInfo({
   selectorAvatar: '.profile__avatar'
 });
 
-const api = new Api(apiConfig);
-api.getUserInfo()
-  .then(data => userInfoPanel.setUserInfo(data))
-  .catch(handleError);
-
 const validators = [];
 initValidators(validators);
 
@@ -104,10 +109,25 @@ initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
 initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
 
-const cardsSection = new Section(renderCard, '.cards-grid');
+const confirmDeleteCardPopup = new PopupWithConfirmation('#popup-confirmation');
+initPopup(confirmDeleteCardPopup);
 
-api.getInitialCards()
-  .then(data => cardsSection.renderItems(data))
+const cardsSection = new Section(renderCard, '.cards-grid');
+const api = new Api(apiConfig);
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userInfo, cards]) => {
+    userInfoPanel.setUserInfo(userInfo);
+    cardsSection.renderItems(cards);
+  })
   .catch(handleError);
+
+// api.getUserInfo()
+//   .then(data => userInfoPanel.setUserInfo(data))
+//   .catch(handleError);
+
+// api.getInitialCards()
+//   .then(data => cardsSection.renderItems(data))
+//   .catch(handleError);
 
 

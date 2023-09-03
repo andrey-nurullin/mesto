@@ -10,13 +10,15 @@ export default class UserInfo {
     const userData = new FormData();
     userData.append('name', this._elementName.textContent);
     userData.append('about', this._elementAbout.textContent);
+    userData.append('_id', this._id);
     return userData;
   }
 
-  setUserInfo({name, about, avatar}) {
+  setUserInfo({name, about, avatar, _id}) {
     this._setName(name);
     this._setAbout(about);
     this._setAvatar(avatar);
+    this._setId(_id);
   }
 
   _setName(name) {
@@ -29,5 +31,9 @@ export default class UserInfo {
 
   _setAvatar(url) {
     this._avatarImage.src = url;
+  }
+
+  _setId(id) {
+    this._id= id;
   }
 }

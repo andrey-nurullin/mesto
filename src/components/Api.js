@@ -21,6 +21,10 @@ export default class Api {
     return this._doRequest('/cards', 'POST', data);
   }
 
+  deleteCard(cardId) {
+    return this._doRequest(`/cards/${cardId}`, 'DELETE');
+  }
+
   /**
    * @param {String} dataUrl Url path to requested data
    * @param {String} method
