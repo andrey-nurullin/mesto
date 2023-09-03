@@ -31,8 +31,7 @@ export default class PopupWithForm extends Popup {
   }
 
   getFormData() {
-    const data = new FormData(this._form);
-    return data;
+    return new FormData(this._form);
   }
 
   getFormId() {

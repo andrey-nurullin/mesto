@@ -1,8 +1,9 @@
 export default class UserInfo {
 
-  constructor({selectorName, selectorAbout}) {
+  constructor({selectorName, selectorAbout, selectorAvatar}) {
     this._elementName = document.querySelector(selectorName);
     this._elementAbout = document.querySelector(selectorAbout);
+    this._avatarImage = document.querySelector(selectorAvatar);
   }
 
   getUserInfo() {
@@ -12,12 +13,12 @@ export default class UserInfo {
     return userData;
   }
 
-  /**
-   * @param {FormData} userData
-   */
-  setUserInfo(userData) {
-    this._setName(userData.get('name'));
-    this._setAbout(userData.get('about'));
+  setUserInfo({name, about, avatar}) {
+    this._setName(name);
+    this._setAbout(about);
+    if (avatar) {
+      this._setAvatar(avatar);
+    }
   }
 
   _setName(name) {
@@ -26,5 +27,9 @@ export default class UserInfo {
 
   _setAbout(about) {
     this._elementAbout.textContent = about;
+  }
+
+  _setAvatar(url) {
+    this._avatarImage.src = url;
   }
 }

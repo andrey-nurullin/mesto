@@ -26,7 +26,15 @@ const initialCards = [
 ];
 
 const apiAuthToken = 'ea1b6130-dab4-493a-93c8-8c94cc2df993';
-const apiChohortId = 'cohort-74';
+const apiCohortId = 'cohort-74';
+
+const apiConfig = {
+  baseUrl: `https://mesto.nomoreparties.co/v1/${apiCohortId}`,
+  headers: {
+    authorization: apiAuthToken,
+    'Content-Type': 'application/json'
+  }
+}
 
 const cssFormData = {
   formSelector: '.form',
@@ -38,5 +46,5 @@ const cssFormData = {
 }
 
 export {
-  initialCards, cssFormData
+  initialCards, cssFormData, apiConfig
 };

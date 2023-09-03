@@ -1,5 +1,5 @@
 import './index.css';
-import { initialCards, cssFormData } from '../utils/constants.js';
+import { initialCards, cssFormData, apiConfig } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -7,10 +7,14 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Popup from '../components/Popup';
+import Api from '../components/Api';
 
 function fillProfileBlock() {
   const profileData = profilePopup.getFormData();
-  userInfo.setUserInfo(profileData);
+  userInfo.setUserInfo({
+    name: profileData.get('name'),
+    about: profileData.get('about')
+  });
 }
 
 function handleProfileFormSubmit() {
@@ -72,6 +76,23 @@ function initPopup(popup, openBtnSelector, handleFormSubmit) {
   }
 }
 
+function setUserData({name, about, avatar}) {
+  userInfo.setName(name);
+  userInfo.setAbout(about);
+  userInfo.setAvatar(avatar);
+}
+
+const userInfo = new UserInfo({
+  selectorName: '.profile__title',
+  selectorAbout: '.profile__subtitle',
+  selectorAvatar: '.profile__avatar'
+});
+
+const api = new Api(apiConfig);
+api.getUserInfo()
+  .then(data => userInfo.setUserInfo(data))
+  .catch(error => console.log(error));
+
 const validators = [];
 initValidators(validators);
 
@@ -83,11 +104,6 @@ initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
 
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
 initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
-
-const userInfo = new UserInfo({
-  selectorName: '.profile__title',
-  selectorAbout: '.profile__subtitle'
-});
 
 const cardsSection = new Section(
   {
