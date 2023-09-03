@@ -25,6 +25,14 @@ export default class Api {
     return this._doRequest(`/cards/${cardId}`, 'DELETE');
   }
 
+  likeCard(cardId) {
+    return this._doRequest(`/cards/${cardId}/likes`, 'PUT');
+  }
+
+  unlikeCard(cardId) {
+    return this._doRequest(`/cards/${cardId}/likes`, 'DELETE');
+  }
+
   /**
    * @param {String} dataUrl Url path to requested data
    * @param {String} method

@@ -25,12 +25,27 @@ function renderCard(cardData) {
     '#card',
     userInfoPanel.getUserInfo().get('_id'),
     fullPhotoPopup.open.bind(fullPhotoPopup),
-    openConfirmDeleteCardPopup
+    openConfirmDeleteCardPopup,
+    handleLikeClick
   );
   const cardElement = card.getView();
   cardsSection.addItem(cardElement);
 }
 
+/**
+ * @param {Card} card
+ */
+function handleLikeClick(card) {
+  const cardId = card.getId();
+  const likeAction = card.getIsLiked() ? api.unlikeCard(cardId) : api.likeCard(cardId);
+  likeAction
+    .then(cardData => card.updateLikeStatus(cardData))
+    .catch(handleError);
+}
+
+/**
+ * @param {Card} card
+ */
 function openConfirmDeleteCardPopup(card) {
   confirmDeleteCardPopup.open();
   confirmDeleteCardPopup.setConfirmHandler(() => {
