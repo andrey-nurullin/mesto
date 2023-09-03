@@ -12,8 +12,11 @@ import Api from '../components/Api';
 function handleProfileFormSubmit() {
   const formData = profilePopup.getFormData();
   const newUserData = Object.fromEntries( formData.entries() );
-  userInfo.setUserInfo(newUserData);
-  api.setUserInfo(newUserData);
+  api.setUserInfo(newUserData)
+    .then(data => {
+      userInfoPanel.setUserInfo(data);
+    })
+    .catch(error => console.log(error));
   profilePopup.close();
 }
 
@@ -41,7 +44,7 @@ function openAddCardPopup() {
 }
 
 function openProfilePopup() {
-  const userData = userInfo.getUserInfo();
+  const userData = userInfoPanel.getUserInfo();
   profilePopup.setFormData(userData);
   validators[ profilePopup.getFormId() ].resetValidation();
   profilePopup.open();
@@ -69,7 +72,7 @@ function initPopup(popup, openBtnSelector, handleFormSubmit) {
   }
 }
 
-const userInfo = new UserInfo({
+const userInfoPanel = new UserInfo({
   selectorName: '.profile__title',
   selectorAbout: '.profile__subtitle',
   selectorAvatar: '.profile__avatar'
@@ -77,7 +80,7 @@ const userInfo = new UserInfo({
 
 const api = new Api(apiConfig);
 api.getUserInfo()
-  .then(data => userInfo.setUserInfo(data))
+  .then(data => userInfoPanel.setUserInfo(data))
   .catch(error => console.log(error));
 
 const validators = [];
