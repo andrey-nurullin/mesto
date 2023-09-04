@@ -17,6 +17,14 @@ export default class FormValidator {
     this._hideErrors();
   }
 
+  setBtnStateProgress() {
+    this._submitButton.textContent = 'Сохранение...';
+  }
+
+  setBtnStateDefault() {
+    this._submitButton.textContent = 'Сохранить';
+  }
+
   _hideErrors() {
     this._inputList.forEach((input) => {
       this._hideInputError(input);

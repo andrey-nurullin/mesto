@@ -9,6 +9,18 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api';
 
+function resetPopupFormValidation(popup) {
+  validators[ popup.getFormId() ].resetValidation();
+}
+
+function setPopupBtnStateProgress(popup) {
+  validators[ popup.getFormId() ].setBtnStateProgress();
+}
+
+function setPopupBtnStateDefault(popup) {
+  validators[ popup.getFormId() ].setBtnStateDefault();
+}
+
 function renderCard(cardData) {
   const card = new Card(
     cardData,
@@ -42,39 +54,45 @@ function openConfirmDeleteCardPopup(card) {
     api.deleteCard(card.getId())
       .then(() => card.remove())
       .catch(handleError)
-      .finally(() => {
-        confirmDeleteCardPopup.close();
-      });
+      .finally(() => confirmDeleteCardPopup.close())
   });
 }
 
 function handleProfileFormSubmit() {
   const formData = profilePopup.getFormData();
   const newUserData = Object.fromEntries( formData.entries() );
+  setPopupBtnStateProgress(profilePopup);
   api.setUserInfo(newUserData)
     .then(data => userInfoPanel.setUserInfo(data))
-    .catch(handleError);
-  profilePopup.close();
+    .catch(handleError)
+    .finally(() => {
+      setPopupBtnStateDefault(profilePopup);
+      profilePopup.close();
+    });
 }
 
 function handleAvatarSubmit() {
   const avatarData = avatarEditPopup.getDataAsObject();
+  setPopupBtnStateProgress(avatarEditPopup);
   api.updateAvatar(avatarData)
     .then(userData => userInfoPanel.setUserInfo(userData))
-    .catch((err) => console.log(err.message))
-    .finally(avatarEditPopup.close());
+    .catch(handleError)
+    .finally(() => {
+      setPopupBtnStateDefault(avatarEditPopup);
+      avatarEditPopup.close();
+    });
 }
 
 function handleAddCardFormSubmit() {
   const rawCardData = addCardPopup.getDataAsObject();
+  setPopupBtnStateProgress(addCardPopup);
   api.addCard(rawCardData)
     .then(cardData => renderCard(cardData))
-    .catch(handleError);
-  addCardPopup.close();
-}
-
-function resetPopupFormValidation(popup) {
-  validators[ popup.getFormId() ].resetValidation();
+    .catch(handleError)
+    .finally(() => {
+      setPopupBtnStateDefault(addCardPopup);
+      addCardPopup.close();
+    });
 }
 
 function openAddCardPopup() {
@@ -106,7 +124,7 @@ function initValidators(validatorsArray) {
 }
 
 function handleError(error) {
-  console.log(error);
+  console.log(error.message);
 }
 
 const userInfoPanel = new UserInfo({
