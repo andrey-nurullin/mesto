@@ -103,9 +103,4 @@ export default class Card {
     this._likeCounter.textContent = this._likeCount;
   }
 
-  // _toggleLike() {
-  //   this._likeBtn.classList.toggle('cards-grid__like-button_active');
-  //   this._isLiked = !this._isLiked;
-  // }
-
 }
