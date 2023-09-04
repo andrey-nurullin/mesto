@@ -1,15 +1,15 @@
 export default class Card {
 
-  constructor(cardData, templateSelector, currentUserId, handleCardClick, handleDeleteClick, handleLikeClick) {
-    this._id = cardData._id;
-    this._name = cardData.name;
-    this._link = cardData.link;
+  constructor({name, link, _id, owner, likes}, templateSelector, currentUserId, handleCardClick, handleDeleteClick, handleLikeClick) {
+    this._id = _id;
+    this._name = name;
+    this._link = link;
     this._currentUserId = currentUserId;
-    this._isUserOwn = this._checkIsUserOwn(cardData);
+    this._isUserOwn = this._checkIsUserOwn(owner);
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
-    this._setLikeParameters(cardData);
+    this._setLikeParameters(likes);
     this._setCardNode(templateSelector);
     this._setEventListeners();
   }
@@ -35,18 +35,25 @@ export default class Card {
     this._updateLikeSection();
   }
 
-  _setLikeParameters(cardData) {
-    this._isLiked = this._checkIsLiked(cardData);
-    this._likeCount = cardData.likes.length;
+  /**
+   * @param {Array} likes
+   */
+  _setLikeParameters(likes) {
+    this._isLiked = this._checkIsLiked(likes);
+    this._likeCount = likes.length;
   }
 
-  _checkIsLiked({likes}) {
+  /**
+   * @param {Array} likes
+   * @returns {Boolean}
+   */
+  _checkIsLiked(likes) {
     return likes.some(
       user => (user._id === this._currentUserId)
     );
   }
 
-  _checkIsUserOwn({owner}) {
+  _checkIsUserOwn(owner) {
     return (owner._id === this._currentUserId)
   }
 
