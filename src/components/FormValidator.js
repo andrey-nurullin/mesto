@@ -17,12 +17,12 @@ export default class FormValidator {
     this._hideErrors();
   }
 
-  setBtnStateProgress() {
-    this._submitButton.textContent = 'Сохранение...';
+  setBtnStateProgress(caption) {
+    this._submitButton.textContent = caption;
   }
 
   setBtnStateDefault() {
-    this._submitButton.textContent = 'Сохранить';
+    this._submitButton.textContent = this._btnDefaultCaption;
   }
 
   _hideErrors() {
@@ -67,6 +67,7 @@ export default class FormValidator {
 
   _setSubmitButton() {
     this._submitButton = this._form.querySelector( this._config.submitButtonSelector );
+    this._btnDefaultCaption = this._submitButton.textContent;
   }
 
   _toggleButtonState() {

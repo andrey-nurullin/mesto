@@ -1,11 +1,10 @@
-import Popup from './Popup.js';
+import PopupWithConfirmation from './PopupWithConfirmation.js';
 
-export default class PopupWithForm extends Popup {
+export default class PopupWithForm extends PopupWithConfirmation {
 
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
-    this._handleFormSubmit = handleFormSubmit;
-    this._form = this._popup.querySelector('.form');
+    super.setSubmitHandler(handleFormSubmit);
   }
 
   close() {
@@ -35,15 +34,6 @@ export default class PopupWithForm extends Popup {
   getDataAsObject() {
     const data = this.getFormData();
     return Object.fromEntries( data.entries() );
-  }
-
-  getFormId() {
-    return this._form.id;
-  }
-
-  setEventListeners(...args) {
-    super.setEventListeners(...args);
-    this._form.addEventListener('submit', () => this._handleFormSubmit());
   }
 
   //Пока неизвестно зачем, но в задании сказано, что должно быть

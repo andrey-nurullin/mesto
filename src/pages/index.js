@@ -1,5 +1,5 @@
 import './index.css';
-import { cssFormData, apiConfig } from '../utils/constants.js';
+import { cssFormData, apiConfig, btnCaption } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -13,8 +13,8 @@ function resetPopupFormValidation(popup) {
   validators[ popup.getFormId() ].resetValidation();
 }
 
-function setPopupBtnStateProgress(popup) {
-  validators[ popup.getFormId() ].setBtnStateProgress();
+function setPopupBtnStateProgress(popup, caption) {
+  validators[ popup.getFormId() ].setBtnStateProgress(caption);
 }
 
 function setPopupBtnStateDefault(popup) {
@@ -50,49 +50,53 @@ function handleLikeClick(card) {
  */
 function openConfirmDeleteCardPopup(card) {
   confirmDeleteCardPopup.open();
-  confirmDeleteCardPopup.setConfirmHandler(() => {
+  confirmDeleteCardPopup.setSubmitHandler(() => {
+    setPopupBtnStateProgress(confirmDeleteCardPopup, btnCaption.progressDelete);
     api.deleteCard(card.getId())
-      .then(() => card.remove())
+      .then(() => {
+        card.remove();
+        setPopupBtnStateDefault(confirmDeleteCardPopup);
+        confirmDeleteCardPopup.close()
+      })
       .catch(handleError)
-      .finally(() => confirmDeleteCardPopup.close())
   });
 }
 
 function handleProfileFormSubmit() {
   const formData = profilePopup.getFormData();
   const newUserData = Object.fromEntries( formData.entries() );
-  setPopupBtnStateProgress(profilePopup);
+  setPopupBtnStateProgress(profilePopup, btnCaption.progressSave);
   api.setUserInfo(newUserData)
-    .then(data => userInfoPanel.setUserInfo(data))
-    .catch(handleError)
-    .finally(() => {
+    .then(data => {
+      userInfoPanel.setUserInfo(data);
       setPopupBtnStateDefault(profilePopup);
       profilePopup.close();
-    });
+    })
+    .catch(handleError);
 }
 
 function handleAvatarSubmit() {
   const avatarData = avatarEditPopup.getDataAsObject();
-  setPopupBtnStateProgress(avatarEditPopup);
+  setPopupBtnStateProgress(avatarEditPopup, btnCaption.progressSave);
   api.updateAvatar(avatarData)
-    .then(userData => userInfoPanel.setUserInfo(userData))
-    .catch(handleError)
-    .finally(() => {
+    .then(userData => {
+      userInfoPanel.setUserInfo(userData);
       setPopupBtnStateDefault(avatarEditPopup);
       avatarEditPopup.close();
-    });
+    })
+    .catch(handleError);
 }
 
 function handleAddCardFormSubmit() {
   const rawCardData = addCardPopup.getDataAsObject();
-  setPopupBtnStateProgress(addCardPopup);
+  setPopupBtnStateProgress(addCardPopup, btnCaption.progressSave);
   api.addCard(rawCardData)
-    .then(cardData => renderCard(cardData))
-    .catch(handleError)
-    .finally(() => {
+    .then(cardData => {
+      renderCard(cardData);
       setPopupBtnStateDefault(addCardPopup);
       addCardPopup.close();
-    });
+    })
+    .catch(handleError);
 }
 
 function openAddCardPopup() {

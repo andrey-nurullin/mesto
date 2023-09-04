@@ -18,6 +18,11 @@ const cssFormData = {
   errorClass: 'form__input-error_visible'
 }
 
+const btnCaption = {
+  progressSave: 'Сохранение...',
+  progressDelete: 'Удаление...'
+}
+
 export {
-  cssFormData, apiConfig
+  btnCaption, cssFormData, apiConfig
 };
