@@ -52,7 +52,7 @@ export default class Api {
       if (response.ok) {
         return response.json();
       }
-      return Promise.reject(new Error(response.status));
+      return Promise.reject(new Error(`Error with status ${response.status}`));
     })
   }
 }

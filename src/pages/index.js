@@ -9,15 +9,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api';
 
-function handleProfileFormSubmit() {
-  const formData = profilePopup.getFormData();
-  const newUserData = Object.fromEntries( formData.entries() );
-  api.setUserInfo(newUserData)
-    .then(data => userInfoPanel.setUserInfo(data))
-    .catch(handleError);
-  profilePopup.close();
-}
-
 function renderCard(cardData) {
   const card = new Card(
     cardData,
@@ -57,11 +48,20 @@ function openConfirmDeleteCardPopup(card) {
   });
 }
 
+function handleProfileFormSubmit() {
+  const formData = profilePopup.getFormData();
+  const newUserData = Object.fromEntries( formData.entries() );
+  api.setUserInfo(newUserData)
+    .then(data => userInfoPanel.setUserInfo(data))
+    .catch(handleError);
+  profilePopup.close();
+}
+
 function handleAvatarSubmit() {
   const avatarData = avatarEditPopup.getDataAsObject();
   api.updateAvatar(avatarData)
     .then(userData => userInfoPanel.setUserInfo(userData))
-    .catch(handleError)
+    .catch((err) => console.log(err.message))
     .finally(avatarEditPopup.close());
 }
 
@@ -73,20 +73,26 @@ function handleAddCardFormSubmit() {
   addCardPopup.close();
 }
 
+function resetPopupFormValidation(popup) {
+  validators[ popup.getFormId() ].resetValidation();
+}
+
 function openAddCardPopup() {
   addCardPopup.resetForm();
-  validators[ addCardPopup.getFormId() ].resetValidation();
+  resetPopupFormValidation(addCardPopup);
   addCardPopup.open();
 }
 
 function openProfilePopup() {
   const userData = userInfoPanel.getUserInfo();
   profilePopup.setFormData(userData);
-  validators[ profilePopup.getFormId() ].resetValidation();
+  resetPopupFormValidation(profilePopup);
   profilePopup.open();
 }
 
 function openAvatarEditPopup() {
+  avatarEditPopup.resetForm();
+  resetPopupFormValidation(avatarEditPopup);
   avatarEditPopup.open();
 }
 
