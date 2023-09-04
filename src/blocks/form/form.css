@@ -1,4 +1,12 @@
 .form {
   display: flex;
   flex-direction: column;
+  margin: 4px 0 18px;
+  padding: 0;
+}
+
+@media (max-width: 550px) {
+  .form__button {
+    margin: 31px 0 21px;
+  }
 }
