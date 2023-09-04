@@ -58,6 +58,10 @@ function openConfirmDeleteCardPopup(card) {
   });
 }
 
+function handleAvatarSubmit() {
+  return;
+}
+
 function handleAddCardFormSubmit() {
   const formData = addCardPopup.getFormData();
   const rawCardData = Object.fromEntries( formData.entries() );
@@ -80,6 +84,10 @@ function openProfilePopup() {
   profilePopup.open();
 }
 
+function openAvatarEditPopup() {
+  avatarEditPopup.open();
+}
+
 function initValidators(validatorsArray) {
   const formList = Array.from( document.querySelectorAll(cssFormData.formSelector) );
   formList.forEach((form) => {
@@ -98,7 +106,7 @@ function initPopup(popup, openBtnSelector, handleFormSubmit) {
   popup.setEventListeners();
   if (openBtnSelector && handleFormSubmit) {
     const openPopupBtn = document.querySelector(openBtnSelector);
-    openPopupBtn.addEventListener('click', handleFormSubmit)
+    openPopupBtn.addEventListener('click', handleFormSubmit);
   }
 }
 
@@ -124,6 +132,9 @@ initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
 initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
 
+const avatarEditPopup = new PopupWithForm('#popup-avatar-edit', handleAvatarSubmit);
+initPopup(avatarEditPopup, '.profile__avatar-edit-button', openAvatarEditPopup)
+
 const confirmDeleteCardPopup = new PopupWithConfirmation('#popup-confirmation');
 initPopup(confirmDeleteCardPopup);
 
@@ -136,13 +147,4 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     cardsSection.renderItems(cards);
   })
   .catch(handleError);
-
-// api.getUserInfo()
-//   .then(data => userInfoPanel.setUserInfo(data))
-//   .catch(handleError);
-
-// api.getInitialCards()
-//   .then(data => cardsSection.renderItems(data))
-//   .catch(handleError);
-
 
