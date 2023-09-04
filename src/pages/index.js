@@ -7,7 +7,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithConfirmation from '../components/PopupWithConfirmation';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import Popup from '../components/Popup';
 import Api from '../components/Api';
 
 function handleProfileFormSubmit() {
@@ -59,12 +58,15 @@ function openConfirmDeleteCardPopup(card) {
 }
 
 function handleAvatarSubmit() {
-  return;
+  const avatarData = avatarEditPopup.getDataAsObject();
+  api.updateAvatar(avatarData)
+    .then(userData => userInfoPanel.setUserInfo(userData))
+    .catch(handleError)
+    .finally(avatarEditPopup.close());
 }
 
 function handleAddCardFormSubmit() {
-  const formData = addCardPopup.getFormData();
-  const rawCardData = Object.fromEntries( formData.entries() );
+  const rawCardData = addCardPopup.getDataAsObject();
   api.addCard(rawCardData)
     .then(cardData => renderCard(cardData))
     .catch(handleError);
@@ -97,19 +99,6 @@ function initValidators(validatorsArray) {
   });
 }
 
-/**
- * @param {Popup} popup
- * @param {String} openBtnSelector
- * @callback handleFormSubmit
- */
-function initPopup(popup, openBtnSelector, handleFormSubmit) {
-  popup.setEventListeners();
-  if (openBtnSelector && handleFormSubmit) {
-    const openPopupBtn = document.querySelector(openBtnSelector);
-    openPopupBtn.addEventListener('click', handleFormSubmit);
-  }
-}
-
 function handleError(error) {
   console.log(error);
 }
@@ -124,27 +113,28 @@ const validators = [];
 initValidators(validators);
 
 const fullPhotoPopup = new PopupWithImage('#popup-full-photo');
-initPopup(fullPhotoPopup);
+fullPhotoPopup.setEventListeners();
 
 const profilePopup = new PopupWithForm('#popup-profile', handleProfileFormSubmit);
-initPopup(profilePopup, '.profile__edit-button', openProfilePopup);
+profilePopup.setEventListeners('.profile__edit-button', openProfilePopup);
 
 const addCardPopup = new PopupWithForm('#popup-add-card', handleAddCardFormSubmit);
-initPopup(addCardPopup, '.profile__add-card-button', openAddCardPopup);
+addCardPopup.setEventListeners('.profile__add-card-button', openAddCardPopup);
 
 const avatarEditPopup = new PopupWithForm('#popup-avatar-edit', handleAvatarSubmit);
-initPopup(avatarEditPopup, '.profile__avatar-edit-button', openAvatarEditPopup)
+avatarEditPopup.setEventListeners('.profile__avatar-edit-button', openAvatarEditPopup);
 
 const confirmDeleteCardPopup = new PopupWithConfirmation('#popup-confirmation');
-initPopup(confirmDeleteCardPopup);
+confirmDeleteCardPopup.setEventListeners();
 
 const cardsSection = new Section(renderCard, '.cards-grid');
 const api = new Api(apiConfig);
 
+//We need to match user ID with card owner ID
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userInfo, cards]) => {
     userInfoPanel.setUserInfo(userInfo);
-    cardsSection.renderItems(cards);
+    cardsSection.renderItems( cards.reverse() );
   })
   .catch(handleError);
 

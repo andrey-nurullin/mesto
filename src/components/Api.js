@@ -10,7 +10,7 @@ export default class Api {
   }
 
   setUserInfo(data) {
-    return this._doRequest('/users/me', 'PATCH', data);
+    return this._doRequest('/usres/me', 'PATCH', data);
   }
 
   getInitialCards() {
@@ -33,6 +33,10 @@ export default class Api {
     return this._doRequest(`/cards/${cardId}/likes`, 'DELETE');
   }
 
+  updateAvatar(data) {
+    return this._doRequest('/users/me/avatar', 'PATCH', data);
+  }
+
   /**
    * @param {String} dataUrl Url path to requested data
    * @param {String} method
@@ -48,7 +52,7 @@ export default class Api {
       if (response.ok) {
         return response.json();
       }
-      return Promise.reject(new Error(`Error status: ${response.status}`));
+      return Promise.reject(new Error(response.status));
     })
   }
 }

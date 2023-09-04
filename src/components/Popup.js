@@ -16,7 +16,15 @@ export default class Popup {
     this._unsetClosingEventListeners();
   }
 
-  setEventListeners() {
+  /**
+ * @param {String} openBtnSelector
+ * @callback handleOpenBtnClick
+ */
+  setEventListeners(openBtnSelector, handleOpenBtnClick) {
+    if (openBtnSelector && handleOpenBtnClick) {
+      const openPopupBtn = document.querySelector(openBtnSelector);
+      openPopupBtn.addEventListener('click', handleOpenBtnClick);
+    }
     this._setClosingButton();
     this._setClosingOverlay();
   }

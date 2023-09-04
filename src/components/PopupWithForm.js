@@ -8,11 +8,6 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.form');
   }
 
-  setEventListeners() {
-    super.setEventListeners();
-    this._form.addEventListener('submit', () => this._handleFormSubmit());
-  }
-
   close() {
     super.close();
     this.resetForm();
@@ -37,8 +32,18 @@ export default class PopupWithForm extends Popup {
     return new FormData(this._form);
   }
 
+  getDataAsObject() {
+    const data = this.getFormData();
+    return Object.fromEntries( data.entries() );
+  }
+
   getFormId() {
     return this._form.id;
+  }
+
+  setEventListeners(...args) {
+    super.setEventListeners(...args);
+    this._form.addEventListener('submit', () => this._handleFormSubmit());
   }
 
   //Пока неизвестно зачем, но в задании сказано, что должно быть
