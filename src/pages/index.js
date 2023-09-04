@@ -124,7 +124,7 @@ function initValidators(validatorsArray) {
 }
 
 function handleError(error) {
-  console.log(error.message);
+  console.log(error);
 }
 
 const userInfoPanel = new UserInfo({
