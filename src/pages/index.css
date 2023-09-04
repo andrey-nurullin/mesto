@@ -46,6 +46,7 @@
 @import url('../blocks/img-with-caption/__caption/img-with-caption__caption.css');
 
 @import url('../blocks/form/form.css');
+@import url('../blocks/form/_no-input/form_no-input.css');
 @import url('../blocks/form/__input/form__input.css');
 @import url('../blocks/form/__input/_type/form__input_type_error.css');
 @import url('../blocks/form/__input-error/form__input-error.css');

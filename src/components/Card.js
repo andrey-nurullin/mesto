@@ -30,8 +30,8 @@ export default class Card {
     this._cardNode.remove();
   }
 
-  updateLikeStatus(cardData) {
-    this._setLikeParameters(cardData);
+  updateLikeStatus({likes}) {
+    this._setLikeParameters(likes);
     this._updateLikeSection();
   }
 
