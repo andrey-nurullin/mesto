@@ -38,6 +38,7 @@
 .img-with-caption__full-img{display:block;max-height:75vh;max-width:75vw}
 .img-with-caption__caption{bottom:-24.5px;color:#fff;font-size:12px;font-weight:400;left:0;line-height:14.5px;margin:0;padding:0;position:absolute}
 .form{display:flex;flex-direction:column;margin:42px 0 0;padding:0}
+.form_no-input{margin:0;padding:0}
 .form__input{background-color:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.2);box-sizing:border-box;color:#000;font-size:14px;font-weight:400;height:32px;line-height:17px;margin:0;width:100%}.form__input::-moz-placeholder{color:#c4c4c4}.form__input::placeholder{color:#c4c4c4}.form__input:focus{outline:none}
 .form__input_type_error{border-bottom:1px solid red}
 .form__input-error{color:red;font-size:12px;line-height:14px;min-height:28px;padding:0 2px;position:relative;top:4px;visibility:hidden}
