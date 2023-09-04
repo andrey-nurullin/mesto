@@ -10,7 +10,7 @@ export default class Api {
   }
 
   setUserInfo(data) {
-    return this._doRequest('/usres/me', 'PATCH', data);
+    return this._doRequest('/users/me', 'PATCH', data);
   }
 
   getInitialCards() {
