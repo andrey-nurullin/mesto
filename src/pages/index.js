@@ -55,10 +55,10 @@ function openConfirmDeleteCardPopup(card) {
     api.deleteCard(card.getId())
       .then(() => {
         card.remove();
-        setPopupBtnStateDefault(confirmDeleteCardPopup);
-        confirmDeleteCardPopup.close()
+        confirmDeleteCardPopup.close();
       })
       .catch(handleError)
+      .finally(() => setPopupBtnStateDefault(confirmDeleteCardPopup));
   });
 }
 
@@ -69,10 +69,10 @@ function handleProfileFormSubmit() {
   api.setUserInfo(newUserData)
     .then(data => {
       userInfoPanel.setUserInfo(data);
-      setPopupBtnStateDefault(profilePopup);
       profilePopup.close();
     })
-    .catch(handleError);
+    .catch(handleError)
+    .finally(() => setPopupBtnStateDefault(profilePopup));
 }
 
 function handleAvatarSubmit() {
@@ -81,10 +81,10 @@ function handleAvatarSubmit() {
   api.updateAvatar(avatarData)
     .then(userData => {
       userInfoPanel.setUserInfo(userData);
-      setPopupBtnStateDefault(avatarEditPopup);
       avatarEditPopup.close();
     })
-    .catch(handleError);
+    .catch(handleError)
+    .finally(() => setPopupBtnStateDefault(avatarEditPopup));
 }
 
 function handleAddCardFormSubmit() {
@@ -93,10 +93,10 @@ function handleAddCardFormSubmit() {
   api.addCard(rawCardData)
     .then(cardData => {
       renderCard(cardData);
-      setPopupBtnStateDefault(addCardPopup);
       addCardPopup.close();
     })
-    .catch(handleError);
+    .catch(handleError)
+    .finally(() => setPopupBtnStateDefault(addCardPopup));
 }
 
 function openAddCardPopup() {

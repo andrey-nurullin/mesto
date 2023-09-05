@@ -36,8 +36,4 @@ export default class PopupWithForm extends PopupWithConfirmation {
     return Object.fromEntries( data.entries() );
   }
 
-  //Пока неизвестно зачем, но в задании сказано, что должно быть
-  _getInputValues() {
-    return new FormData(this._form).values();
-  }
 }
